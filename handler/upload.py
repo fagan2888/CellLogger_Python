@@ -63,7 +63,7 @@ class UploadHandler(webapp2.RequestHandler):
 
             try :
                 one.client = client
-                one.client_id = str(re['client_id'])
+                one.client_id = str(re['id'])
                 one.network_type = re['network_type']
                 one.lac = re['lac']
                 one.cid = re['cid']
