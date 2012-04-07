@@ -1,0 +1,34 @@
+
+{% extends "base.html" %}
+
+{% block title %}Operation - {% endblock %}
+
+{% block content %}
+
+Status: {{ status }} <br />
+Next: <a href="{{ next }}">{{ next }}</a> <br />
+{% if autojump %}
+Auto redirect in <span id="tl"></span> seconds.
+{% endif %}
+
+<script type="text/javascript">
+var next = '{{ next }}';
+var autojump = '{{ autojump }}';
+var jumptime = 3;
+$(document).ready(function(){
+    $('#tl').text(jumptime);
+    if(autojump) {
+        window.setInterval(function(){
+            if(jumptime <= 1) {
+                window.location.href = next; 
+            } else {
+                jumptime -= 1;
+                $('#tl').text(jumptime);
+            }
+        }, 1000);
+    }
+});
+</script>
+
+{% endblock %}
+

@@ -1,0 +1,69 @@
+
+* {
+    font-size: 14px;
+    color: #333;
+    font-family: 'Droid Sans', sans-serif;
+}
+
+a  {
+    color: #77f;
+}
+a:hover  {
+    color: #00f;
+}
+
+.rr {
+    text-align: right; 
+}
+
+.ll {
+    text-align: left; 
+}
+
+.ss {
+    font-size: 10px;
+}
+
+th {
+    background-color: #ccc;
+}
+
+.hover { 
+    background-color: #eee; 
+}
+
+.hover * { 
+    color: #000;
+}
+
+
+
+#header {
+    background-color: #ccccee;
+    line-height: 44px;
+    font-size: 24px;
+    font-weight: bold;
+    text-indent: 1em;
+}
+
+#header p {
+    line-height: 24px;
+}
+
+#footer {
+    background-color: #cccccc;
+    line-height: 44px;
+    font-size: 18px;
+    font-weight: bold;
+    text-indent: 1em;
+}
+
+.pager {
+    text-align: right;
+}
+
+.buttons {
+    margin: 0 12px;
+}
+
+
