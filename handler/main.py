@@ -9,6 +9,12 @@ from google.appengine.api import users
 import webapp2
 import jinja2
 
+dirname=os.path.dirname
+path=os.path.join(dirname(dirname(__file__)))
+sys.path.insert(0,path)
+import dao
+
+
 tpl_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'tpl')
 
 jinja_environment = jinja2.Environment(
@@ -24,12 +30,71 @@ class MainHandler(webapp2.RequestHandler):
         template = jinja_environment.get_template('%s.html' % tpl)
         self.response.out.write(template.render(vars))
 
+    def action_delete(self):
+        items = self.request.POST.getall('checkitem')
+
+        if len(items) == 0 :
+            return 'no record checked, cancel'
+
+        count = 0;
+        for key in items:
+            record = dao.record.Record.get(key)
+            if(record):
+                db.delete(record) 
+                count += 1
+
+        return 'deleted %d record' % (count, )
+
+    def action_approve(self):
+        items = self.request.POST.getall('checkitem')
+
+        if len(items) == 0 :
+            return 'no record checked, cancel'
+
+        count = 0;
+        for key in items:
+            record = dao.record.Record.get(key)
+            if(record):
+                record.approved = True
+                count += 1
+                record.put();
+
+        return 'approved %d record' % (count, )
+
+    def action_decline(self):
+        items = self.request.POST.getall('checkitem')
+
+        if len(items) == 0 :
+            return 'no record checked, cancel'
+
+        count = 0;
+        for key in items:
+            record = dao.record.Record.get(key)
+            if(record):
+                record.approved = False
+                count += 1
+                record.put();
+
+        return 'declined %d record' % (count, )
+
     def post(self):
 
+        msg = ''
+        action = self.request.get('action')
+        if action == 'delete' :
+            msg = self.action_delete()
+        elif action == 'approve' :
+            msg = self.action_approve()
+        elif action == 'decline' :
+            msg = self.action_decline()
+        else:
+            msg = 'invalid action';
+
+
         vars = {}
-        vars['status'] = '...';
-        vars['next']   = '/';
-        vars['autojump'] = '1';
+        vars['status'] = msg
+        vars['next']   = '/'
+        vars['autojump'] = '1'
         self.output('op', vars)
 
 
@@ -43,7 +108,7 @@ class MainHandler(webapp2.RequestHandler):
         res = db.GqlQuery(sql)
         records = tuple(res)
 
-        logging.debug(len(records));
+        logging.debug(len(records))
 
         pager = {}
         if offset > 0 :
