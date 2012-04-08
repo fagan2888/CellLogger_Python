@@ -13,7 +13,7 @@ handlers:
   static_dir: static
 
 - url: .*
-  script: route.app
+  script: main.app
 
 libraries:
 - name: webapp2

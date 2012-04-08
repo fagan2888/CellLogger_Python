@@ -2,7 +2,7 @@
 * {
     font-size: 14px;
     color: #333;
-    font-family: 'Droid Sans', sans-serif;
+    font-family: arial,sans-serif;
 }
 
 a  {
@@ -24,12 +24,19 @@ a:hover  {
     font-size: 10px;
 }
 
+.cc {
+    text-align: center;
+}
+
 th {
     background-color: #ccc;
 }
 
 .hover { 
     background-color: #eee; 
+}
+.hi {
+    background-color: #ffc;
 }
 
 .hover * { 
@@ -64,6 +71,15 @@ th {
 
 .buttons {
     margin: 0 12px;
+}
+
+.buttons button {
+    float: left;
+}
+
+.cell span {
+    background-color: #ccc;
+    margin: 0 4px;
 }
 
 

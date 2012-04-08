@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}List Station - {% endblock %}
+
+{% block content %}
+
+<form id="frm-batch" name="frm-batch" method="post" action="{{ action_url }}">
+    <input type="hidden" id="batch-action" name="action" value="" />
+
+
+<table class="tbl-checkall" width="100%" cellpadding="4" cellspacing="0" border="1">
+
+<tr>
+    <th><input class="action-checkall" type="checkbox" name="checkall" value="" /></th>
+    <th>station id </th>
+    <th>station name </th>
+    <th>cell </th>
+    <th>update time </th>
+</tr>
+
+    {% for station in stations %}
+    {% include "station_item.html" %}
+    {% endfor %}
+
+    
+</table>
+</form>
+
+
+{% endblock %}
+

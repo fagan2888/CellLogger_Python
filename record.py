@@ -81,6 +81,13 @@ class RecordHandler(webapp2.RequestHandler):
         for key in items:
             record = model.Record.get(key)
             if(record):
+
+                cell = model.Cell(record.lac, record.cid)
+
+                station = model.Station.get_or_insert_station(str(record.station))
+                station.cell.add(cell)
+                station.put()
+
                 record.approved = True
                 count += 1
                 record.put()
@@ -116,11 +123,11 @@ class RecordHandler(webapp2.RequestHandler):
         else:
             msg = 'invalid action'
 
-        prev_offset = self.request.get('offset')
+        offset = self.request.get('offset')
 
         vars = {}
         vars['status'] = msg
-        vars['next']   = '/record?offset=%s' % (prev_offset,)
+        vars['next']   = self.uri_for('record', offset=offset)
         vars['autojump'] = '1'
         self.output('op', vars)
 
@@ -150,7 +157,7 @@ class RecordHandler(webapp2.RequestHandler):
         vars = {}
         vars['pager'] = pager
         vars['records'] = records[:limit]
-        vars['action_url'] = uri = self.uri_for('record', offset=offset)
+        vars['action_url'] = self.uri_for('record', offset=offset)
         self.output('record', vars)
 
 

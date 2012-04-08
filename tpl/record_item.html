@@ -6,8 +6,9 @@
     <td class="rr">{{ record.lac }}</td>
     <td class="rr">{{ record.cid }}</td>
     <td class="rr">{{ record.station }}</td>
+    <td class="rr">{{ record.station|station_name }}</td>
     <td class="rr">{{ record.signal }}</td>
-    <td class=""  >{{ record.client_time }}</td>
-    <td class=""  >{{ record.time|string|truncate(19, true, '') }}</td>
+    <td class=""  >{{ record.client_time|localtime }}</td>
+    <td class=""  >{{ record.time|localtime }}</td>
     <td class=""  >{{ record.approved }}</td>
 </tr>

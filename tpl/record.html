@@ -4,8 +4,20 @@
 
 {% block content %}
 
-<form id="frm-batch" name="frm-batch" method="post" action="">
+<form id="frm-batch" name="frm-batch" method="post" action="{{ action_url }}">
     <input type="hidden" id="batch-action" name="action" value="" />
+
+<div class="type">
+    <a href="?type=new">new</a>
+    &nbsp;|&nbsp;
+    <a href="?type=approved">approved</a>
+    &nbsp;|&nbsp;
+    <a href="?type=declined">declined</a>
+    &nbsp;|&nbsp;
+    <a href="?type=all">all</a>
+</div>
+
+<hr />
 
 <div class="buttons">
     <button class="action-delete" name="delete" type="button">delete selected</button>
@@ -25,6 +37,7 @@
     <th>lac </th>
     <th>cid </th>
     <th>station id </th>
+    <th>station name </th>
     <th>signal strength </th>
     <th>client time </th>
     <th>upload time </th>
@@ -41,6 +54,10 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
+    function highlight_row() {
+        $("td :checkbox").closest('tr').removeClass('hi');
+        $("td :checked").closest('tr').addClass('hi');
+    }
     $("table").delegate('td','mouseover mouseleave', function(e) {
         if (e.type == 'mouseover') {
             $(this).parent().addClass("hover");
@@ -53,11 +70,13 @@ $(document).ready(function(){
         var chk = $(this).closest("tr").find("input:checkbox").get(0);
         if(chk && e.target != chk){
             chk.checked = !chk.checked;
+            highlight_row();
         }   
     }); 
     $('.action-checkall').click(function(e){
         var checked = e.target.checked; 
         $(".tbl-checkall td input:checkbox").attr('checked', checked);
+        highlight_row();
     }); 
 
     $('.buttons button').click(function(e){

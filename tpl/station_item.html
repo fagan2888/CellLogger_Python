@@ -1,0 +1,11 @@
+<tr>
+    <td class="cc"><input type="checkbox" name="checkitem" value="{{ station.key()|escape }}" /></td>
+    <td class="cc">{{ station.station }}</td>
+    <td class="cc">{{ station.station|station_name }}</td>
+    <td class="rr cell">
+    {% for c in station.cell%}
+    <span>{{c.lac}},{{c.cid}}</span>
+    {% endfor %}
+    </td>
+    <td class="cc">{{ station.time|localtime }}</td>
+</tr>
